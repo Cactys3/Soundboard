@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://dg0hl4dpjiqhh"]
+
+[ext_resource type="Script" uid="uid://l80vf62flid3" path="res://option.gd" id="1_cd5v0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rtwqn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cd5v0"]
+bg_color = Color(0.16862746, 0.16862746, 0.16078432, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rtwqn"]
+bg_color = Color(0.31916445, 0.31916708, 0.30663434, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_slay5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cd5v0"]
+
+[node name="VBoxContainer" type="VBoxContainer" node_paths=PackedStringArray("text_edit", "line_edit", "play")]
+offset_right = 52.0
+offset_bottom = 54.0
+theme_override_constants/separation = 0
+script = ExtResource("1_cd5v0")
+text_edit = NodePath("")
+line_edit = NodePath("HBoxContainer/LineEdit")
+play = NodePath("Play")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rtwqn")
+placeholder_text = "Sound Name"
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxFlat_cd5v0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cd5v0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rtwqn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_slay5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cd5v0")
+text = "Play"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

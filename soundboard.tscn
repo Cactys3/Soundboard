@@ -1,0 +1,156 @@
+[gd_scene load_steps=6 format=3 uid="uid://cikvr84xnybay"]
+
+[ext_resource type="Script" uid="uid://c8ewowuvvovg4" path="res://soundboard.gd" id="1_dbo81"]
+[ext_resource type="Script" uid="uid://c5nt7u0noibc7" path="res://context_parent.gd" id="2_rk357"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbo81"]
+bg_color = Color(0.14901961, 0.14901961, 0.14117648, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rk357"]
+bg_color = Color(0.29336467, 0.29336756, 0.2804759, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rk357"]
+
+[node name="Soundboard" type="Control" node_paths=PackedStringArray("grid", "randomize_colors", "search")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_dbo81")
+grid = NodePath("PanelContainer/VSplitContainer/Grid")
+randomize_colors = NodePath("PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer/StopAllSounds")
+search = NodePath("PanelContainer/VSplitContainer/Control/LineEdit")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+focus_mode = 1
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbo81")
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_constants/autohide = 0
+split_offset = -170
+
+[node name="Control" type="Control" parent="PanelContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VSplitContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Offset" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "It's a Soundboard! 
+Drag and drop audio files in to start (or add them to application folder)
+Right click on sounds to change playback modes
+'Save' them to copy the sound file to this application's folder (will be loaded on start)
+'Delete' moves the file from application folder to trash (will only be removed from application folder)"
+horizontal_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Label"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="StopAllSounds" type="Button" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+text = "Stop All Sounds"
+
+[node name="Control2" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[node name="RandomizeColors" type="Button" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "Randomize
+Colors"
+
+[node name="Offset2" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rk357")
+
+[node name="Offset3" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/VSplitContainer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rk357")
+placeholder_text = "Search"
+
+[node name="Grid" type="GridContainer" parent="PanelContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 5
+
+[node name="ContextParent" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rk357")
+
+[connection signal="pressed" from="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer/StopAllSounds" to="." method="_on_stop_all_sounds_pressed"]
+[connection signal="pressed" from="PanelContainer/VSplitContainer/Control/VBoxContainer/Label/HBoxContainer/RandomizeColors" to="." method="_on_randomize_colors_pressed"]
