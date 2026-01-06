@@ -7,6 +7,7 @@ class_name ContextMenu
 @export var delete: Button 
 @export var stop_all_sounds: Button 
 @export var loop: Button 
+@export var remove: Button 
 @export var slider: VSlider
 var option: Option
 var unloop: bool = false
@@ -34,6 +35,8 @@ func setup(new_option: Option, restarting: bool, repeating: bool, pausing: bool,
 		loop.text = "Disable Loop"
 	if saved:
 		save.text = "Rename (Saved✔)"
+	else:
+		remove.visible = false
 func _on_repeat_pressed() -> void:
 	option.repeat()
 func _on_save_pressed() -> void:
@@ -51,10 +54,10 @@ func _on_loop_pressed() -> void:
 		option.disable_loop()
 	else:
 		option.loop()
-#func _on_v_slider_drag_ended(_value_changed: bool) -> void:
-	#option.volume(slider.value, slider.max_value)
-	#cancel_next_free = true
 func _on_v_slider_value_changed(value: float) -> void:
 	if option:
 		option.volume(slider.value, slider.max_value)
 		cancel_next_free = true
+func _on_remove_pressed() -> void:
+	option.stop_all_sounds()
+	option.die()

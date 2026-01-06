@@ -99,7 +99,8 @@ text = "[center]CACTAS: It's a Soundboard![/center]
 		- \"Loop\" will loop the sound once it's done, but only while not using \"Restart\" playback mode
 		- 'Save' them to copy the sound file to this application's folder (will be loaded on start)
 		- 'Delete' moves the file from application folder to trash (will only be removed from application folder)
-This app will look for a folder called 'SavedAudio' for finding the audio clips, if none exist, it'll make a new one
+5. This app will look for a folder called 'SavedAudio' for finding the audio clips, if none exist, it'll make a new one
+6. Newly dragged in sounds won't be saved to that folder unless you right click 'Save' them!
 PS: Many '.WAV' files won't work as they aren't 8bit/16bit, I would just convert them to mp3/ogg if that's the case (google \"convert .wav to .mp3\")
 PPS: You can use arrow keys to navigate most menus, like using UP/DOWN to change volume after clicking on volume slider"
 scroll_active = false

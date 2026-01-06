@@ -22,6 +22,7 @@ func _ready() -> void:
 	description.meta_clicked.connect(_on_meta_clicked)
 	var exe_folder = OS.get_executable_path().get_base_dir()
 	folder = exe_folder + "/SavedAudio/"
+	folder = folder.replace("\\", "/")
 	get_window().files_dropped.connect(drop_file)
 	get_window().size_changed.connect(resize)
 	create_folder_if_needed(folder)
@@ -67,6 +68,10 @@ func handle_drop(drop: Drop):
 			var pack: PackedStringArray = file.split('\\')
 			var filename: String = pack[pack.size() - 1]
 			## On Duplicate Soundbyte dragged in, Confirm with User that they want to add the duplicate
+			print("")
+			for filez in Files:
+				print(filez + " Eq: " + str(filez == file))
+			print("File: " + file)
 			if Files.has(file):
 				var confirmation: Confirmation = CONFIRMATION.instantiate()
 				ContextParent.instance.add_child(confirmation)
@@ -229,7 +234,9 @@ func get_files_in_folder(folder_path: String) -> Array[String]:
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		files.append(folder_path + "/" + file_name)
+		var file: String = (folder_path + "/" + file_name).replace("//", "\\")
+		file = file.replace("/", "\\")
+		files.append(file)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	return files
