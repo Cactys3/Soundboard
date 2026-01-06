@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cikvr84xnybay"]
+[gd_scene load_steps=7 format=3 uid="uid://cikvr84xnybay"]
 
 [ext_resource type="Script" uid="uid://c8ewowuvvovg4" path="res://soundboard.gd" id="1_dbo81"]
 [ext_resource type="Script" uid="uid://c5nt7u0noibc7" path="res://context_parent.gd" id="2_rk357"]
@@ -6,12 +6,24 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbo81"]
 bg_color = Color(0.14901961, 0.14901961, 0.14117648, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uolrp"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.90588236)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rk357"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rk357"]
 bg_color = Color(0, 0, 0, 1)
 
-[node name="Soundboard" type="Control" node_paths=PackedStringArray("grid", "randomize_colors", "search", "volume_slider", "popup_parent")]
+[node name="Soundboard" type="Control" node_paths=PackedStringArray("grid", "randomize_colors", "search", "volume_slider", "popup_parent", "description")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,12 +32,14 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 script = ExtResource("1_dbo81")
 grid = NodePath("PanelContainer/VSplitContainer/MarginContainer/Grid")
 randomize_colors = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/StopAllSounds")
 search = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/LineEdit")
 volume_slider = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/VBoxContainer/VSlider")
 popup_parent = NodePath("PopupParent")
+description = NodePath("PanelContainer/VSplitContainer/Control/VBoxContainer/Description")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -43,12 +57,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dbo81")
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_constants/autohide = 0
-split_offset = -236
+split_offset = -272
 
 [node name="Control" type="Control" parent="PanelContainer/VSplitContainer"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VSplitContainer/Control"]
 layout_mode = 1
@@ -64,22 +79,30 @@ alignment = 1
 [node name="Offset" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Description" type="RichTextLabel" parent="PanelContainer/VSplitContainer/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.8175213, 0.8175213, 0.81752115, 1)
 bbcode_enabled = true
-text = "CACTAS: It's a Soundboard! 
-Drag this scrollbar down to see more on how to use it!
-Drag and drop audio files (MP3, OGG, or WAV) in to start (or add them to application folder)
-Try www.MyInstants.com for mp3 sound effect files
-Right click on sounds to change playback modes
-Change the volume with the dragbars
-'Save' them to copy the sound file to this application's folder (will be loaded on start)
-'Delete' moves the file from application folder to trash (will only be removed from application folder)
-Many '.WAV' files won't work as they aren't 8bit/16bit, I would just convert them to mp3/ogg if that's the case (google \"convert .wav to .mp3\")
-"
-horizontal_alignment = 1
+text = "[center]CACTAS: It's a Soundboard![/center]
+1. Drag the divider below this down to see more on how to use it!
+2. Drag and drop audio files (MP3, OGG, or WAV) into this app to start (or add them to 'SavedAudio' folder)
+3. Try [url=https://www.MyInstants.com]MyInstants.com[/url] to find mp3 sound effect files (try not to use .WAV)
+4. Right click on sounds to change things about them:
+		- Change the volume with the dragbars to the right (App-wide volume is at the top right of the app)
+		- \"Play Multiple\" will play a sound multiple times at the same time
+		- \"Restart\" will restart the sound from the begining if you play after stopping
+		- \"Pause\" will pause the sound and resume if you play after stopping
+		- \"Loop\" will loop the sound once it's done, but only while not using \"Restart\" playback mode
+		- 'Save' them to copy the sound file to this application's folder (will be loaded on start)
+		- 'Delete' moves the file from application folder to trash (will only be removed from application folder)
+This app will look for a folder called 'SavedAudio' for finding the audio clips, if none exist, it'll make a new one
+PS: Many '.WAV' files won't work as they aren't 8bit/16bit, I would just convert them to mp3/ogg if that's the case (google \"convert .wav to .mp3\")
+PPS: You can use arrow keys to navigate most menus, like using UP/DOWN to change volume after clicking on volume slider"
+scroll_active = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Description"]
 layout_mode = 1
@@ -93,10 +116,12 @@ theme_override_constants/separation = 0
 [node name="Control" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Description/HBoxContainer"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Control2" type="Control" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Description/HBoxContainer"]
 custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="RandomizeColors" type="Button" parent="PanelContainer/VSplitContainer/Control/VBoxContainer/Description/HBoxContainer"]
 visible = false
@@ -105,6 +130,7 @@ custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 4
+mouse_filter = 1
 text = "Randomize
 Colors"
 
@@ -124,12 +150,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="StopAllSounds" type="Button" parent="PanelContainer/VSplitContainer/Control/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_uolrp")
 text = "  Stop All Sounds  "
 
 [node name="LineEdit" type="LineEdit" parent="PanelContainer/VSplitContainer/Control/HBoxContainer"]
@@ -154,6 +182,7 @@ value = 50.0
 [node name="Control" type="Control" parent="PanelContainer/VSplitContainer/Control/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="PanelContainer/VSplitContainer/Control"]
 custom_minimum_size = Vector2(0, 5)
@@ -164,6 +193,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_rk357")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VSplitContainer"]

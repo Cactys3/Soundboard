@@ -5,6 +5,7 @@ class_name Soundboard
 @export var search: LineEdit 
 @export var volume_slider: VSlider
 @export var popup_parent: Control
+@export var description: RichTextLabel
 const OPTION = preload("uid://dg0hl4dpjiqhh")
 const CONFIRMATION = preload("uid://cknxag736p0rx")
 const POPUP = preload("uid://capfc3v3d41ut")
@@ -18,19 +19,30 @@ var PopupQueue: Array[Pop]
 var folder: String = "res://SavedAudio/"
 var timer: float = 0
 func _ready() -> void:
+	description.meta_clicked.connect(_on_meta_clicked)
+	var exe_folder = OS.get_executable_path().get_base_dir()
+	folder = exe_folder + "/SavedAudio/"
+	print(folder)
 	get_window().files_dropped.connect(drop_file)
 	get_window().size_changed.connect(resize)
+	create_folder_if_needed(folder)
 	SavedFiles = get_files_in_folder(folder)
-	drop_file(get_files_in_folder("res://SavedAudio/"))
+	drop_file(get_files_in_folder(folder))
 	search.text_changed.connect(edit_search)
 	volume_slider.value_changed.connect(volume)
 	call_deferred("resize")
 	var save_value: float = read_number_from_json(folder)
-	if save_value != -999:
+	if save_value != -999 && save_value != 1:
 		volume_slider.value = (save_value * volume_slider.max_value) / 2
-		volume(save_value)
-	print("save: " + str(global_volume) +"  " + str(volume_slider.value))
+		global_volume = (volume_slider.value / volume_slider.max_value) * 2
+		var popup: PopupLabel = POPUP.instantiate()
+		popup_parent.add_child(popup)
+		call_deferred("clamp_on_position", get_viewport().get_visible_rect().end * Vector2(1, -1), popup)
+		popup.setup("Saved Application Volume: " + str(int(save_value * 100)) + "%", 2)
 	tree_exited.connect(save_volume)
+func _on_meta_clicked(meta):
+	print("meta")
+	OS.shell_open(meta)
 func save_volume():
 	write_number_to_json(folder, global_volume)
 func _process(delta: float) -> void:
@@ -87,6 +99,7 @@ func handle_drop(drop: Drop):
 					option.size = option_size
 					option.custom_minimum_size = option_size
 func save_option(filepath: String, new_name: String):
+	create_folder_if_needed(folder)
 	new_name = new_name.replace(" ", "_")
 	new_name = new_name.replace("\n", "_")
 	new_name = new_name.validate_filename()
@@ -214,13 +227,12 @@ func get_files_in_folder(folder_path: String) -> Array[String]:
 	var files: Array[String] = []
 	var dir = DirAccess.open(folder_path)
 	if dir == null:
-		push_error("Failed to open directory: " + folder_path)
+		print("Failed to open directory: " + folder_path)
 		return files
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		if !dir.current_is_dir():  # Skip subdirectories
-			files.append(folder_path + "/" + file_name)
+		files.append(folder_path + "/" + file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	return files
@@ -340,3 +352,10 @@ func read_number_from_json(folder_path: String) -> float:
 	if json_data == null or !json_data.has("value"):
 		return -999
 	return json_data["value"]
+func create_folder_if_needed(folder_path: String) -> bool:
+	if not DirAccess.dir_exists_absolute(folder_path):
+		var err = DirAccess.make_dir_recursive_absolute(folder_path)
+		print("folder doesn't exist, error: " + str(err))
+		return err == OK
+	print("folder exists")
+	return false
