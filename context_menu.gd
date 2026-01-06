@@ -7,20 +7,23 @@ class_name ContextMenu
 @export var delete: Button 
 @export var stop_all_sounds: Button 
 @export var loop: Button 
-
+@export var slider: VSlider
 var option: Option
 var unloop: bool = false
-
+var cancel_next_free: bool = false
+var already_saved: bool
 func _process(_delta: float) -> void:
 	if Input.is_action_just_released("LeftClick"):
+		if cancel_next_free:
+			cancel_next_free = false
+			return
 		queue_free()
 		ContextParent.instance.visible = false
-
-var already_saved: bool
-
-func setup(new_option: Option, restarting: bool, repeating: bool, pausing: bool, looping: bool, saved: bool):
+func setup(new_option: Option, restarting: bool, repeating: bool, pausing: bool, looping: bool, saved: bool, new_volume: float):
+	print(looping)
+	slider.value = (new_volume * slider.max_value) / 2
 	option = new_option
-	unloop = !looping
+	unloop = looping
 	already_saved = saved
 	if restarting:
 		restart.text = "Restart On Click✔"
@@ -28,11 +31,10 @@ func setup(new_option: Option, restarting: bool, repeating: bool, pausing: bool,
 		multiple.text = "Play Multiple On Click✔"
 	if pausing:
 		pause.text = "Pause On Click✔"
-	if !looping:
+	if looping:
 		loop.text = "Disable Loop"
 	if saved:
 		save.text = "Rename (Saved✔)"
-
 func _on_repeat_pressed() -> void:
 	option.repeat()
 func _on_save_pressed() -> void:
@@ -46,4 +48,14 @@ func _on_restart_pressed() -> void:
 func _on_pause_pressed() -> void:
 	option.pause()
 func _on_loop_pressed() -> void:
-	option.loop()
+	if unloop:
+		option.disable_loop()
+	else:
+		option.loop()
+#func _on_v_slider_drag_ended(_value_changed: bool) -> void:
+	#option.volume(slider.value, slider.max_value)
+	#cancel_next_free = true
+func _on_v_slider_value_changed(value: float) -> void:
+	if option:
+		option.volume(slider.value, slider.max_value)
+		cancel_next_free = true

@@ -14,7 +14,7 @@ bg_color = Color(0.31916445, 0.31916708, 0.30663434, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8eruf"]
 
-[node name="ContextMenu" type="Control" node_paths=PackedStringArray("multiple", "restart", "pause", "save", "delete", "stop_all_sounds", "loop")]
+[node name="ContextMenu" type="Control" node_paths=PackedStringArray("multiple", "restart", "pause", "save", "delete", "stop_all_sounds", "loop", "slider")]
 z_index = 1
 z_as_relative = false
 custom_minimum_size = Vector2(200, 200)
@@ -23,15 +23,16 @@ anchors_preset = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_8eruf")
-multiple = NodePath("VBoxContainer/Multiple")
-restart = NodePath("VBoxContainer/Restart")
-pause = NodePath("VBoxContainer/Pause")
-save = NodePath("VBoxContainer/Save")
-delete = NodePath("VBoxContainer/Delete")
-stop_all_sounds = NodePath("VBoxContainer/StopAllSounds")
-loop = NodePath("VBoxContainer/Loop")
+multiple = NodePath("HBoxContainer/VBoxContainer/Multiple")
+restart = NodePath("HBoxContainer/VBoxContainer/Restart")
+pause = NodePath("HBoxContainer/VBoxContainer/Pause")
+save = NodePath("HBoxContainer/VBoxContainer/Save")
+delete = NodePath("HBoxContainer/VBoxContainer/Delete")
+stop_all_sounds = NodePath("HBoxContainer/VBoxContainer/StopAllSounds")
+loop = NodePath("HBoxContainer/VBoxContainer/Loop")
+slider = NodePath("HBoxContainer/VSlider")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,7 +41,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Multiple" type="Button" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Multiple" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -50,7 +56,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_psh83")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2lrye")
 text = "Play Multiple On Click"
 
-[node name="Restart" type="Button" parent="VBoxContainer"]
+[node name="Restart" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -60,7 +66,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_psh83")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2lrye")
 text = "Restart On Click"
 
-[node name="Pause" type="Button" parent="VBoxContainer"]
+[node name="Pause" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -70,7 +76,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_psh83")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2lrye")
 text = "Pause On Click"
 
-[node name="Save" type="Button" parent="VBoxContainer"]
+[node name="Save" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -79,7 +85,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_0f8wh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8eruf")
 text = "Save"
 
-[node name="Delete" type="Button" parent="VBoxContainer"]
+[node name="Delete" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -88,7 +94,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_0f8wh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8eruf")
 text = "Delete"
 
-[node name="StopAllSounds" type="Button" parent="VBoxContainer"]
+[node name="StopAllSounds" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -97,7 +103,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_0f8wh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8eruf")
 text = "Stop All Sounds"
 
-[node name="Loop" type="Button" parent="VBoxContainer"]
+[node name="Loop" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_8eruf")
@@ -106,10 +112,19 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_0f8wh")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_8eruf")
 text = "Loop (not for multiple)"
 
-[connection signal="pressed" from="VBoxContainer/Multiple" to="." method="_on_repeat_pressed"]
-[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="VBoxContainer/Pause" to="." method="_on_pause_pressed"]
-[connection signal="pressed" from="VBoxContainer/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="VBoxContainer/Delete" to="." method="_on_delete_pressed"]
-[connection signal="pressed" from="VBoxContainer/StopAllSounds" to="." method="_on_stop_all_sounds_pressed"]
-[connection signal="pressed" from="VBoxContainer/Loop" to="." method="_on_loop_pressed"]
+[node name="VSlider" type="VSlider" parent="HBoxContainer"]
+layout_mode = 2
+value = 50.0
+ticks_position = 3
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Multiple" to="." method="_on_repeat_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/StopAllSounds" to="." method="_on_stop_all_sounds_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/Loop" to="." method="_on_loop_pressed"]
+[connection signal="drag_ended" from="HBoxContainer/VSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="mouse_entered" from="HBoxContainer/VSlider" to="." method="_on_v_slider_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/VSlider" to="." method="_on_v_slider_mouse_exited"]
+[connection signal="value_changed" from="HBoxContainer/VSlider" to="." method="_on_v_slider_value_changed"]

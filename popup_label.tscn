@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://capfc3v3d41ut"]
+
+[ext_resource type="Script" uid="uid://b6ucveya13rg" path="res://popup_label.gd" id="1_lrww6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lrww6"]
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="PopupLabel" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Volume: "
+label_settings = SubResource("LabelSettings_lrww6")
+script = ExtResource("1_lrww6")
