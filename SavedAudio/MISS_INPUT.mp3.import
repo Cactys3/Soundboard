@@ -1,3 +1,19 @@
 [remap]
 
-importer="skip"
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://db02hqt8888ol"
+path="res://.godot/imported/MISS_INPUT.mp3-a7a2ecd65df5e5407e365687de598f10.mp3str"
+
+[deps]
+
+source_file="res://SavedAudio/MISS_INPUT.mp3"
+dest_files=["res://.godot/imported/MISS_INPUT.mp3-a7a2ecd65df5e5407e365687de598f10.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

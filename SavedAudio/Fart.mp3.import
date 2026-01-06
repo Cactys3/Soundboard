@@ -1,3 +1,19 @@
 [remap]
 
-importer="skip"
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dbglu4t7vxutf"
+path="res://.godot/imported/Fart.mp3-c03c6ef87c6e0e4551c708eed48a076f.mp3str"
+
+[deps]
+
+source_file="res://SavedAudio/Fart.mp3"
+dest_files=["res://.godot/imported/Fart.mp3-c03c6ef87c6e0e4551c708eed48a076f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

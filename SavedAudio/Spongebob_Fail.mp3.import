@@ -1,3 +1,19 @@
 [remap]
 
-importer="skip"
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c6lgqe75v8vvx"
+path="res://.godot/imported/Spongebob_Fail.mp3-5fe844cd5138685f02a941668ac8b406.mp3str"
+
+[deps]
+
+source_file="res://SavedAudio/Spongebob_Fail.mp3"
+dest_files=["res://.godot/imported/Spongebob_Fail.mp3-5fe844cd5138685f02a941668ac8b406.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

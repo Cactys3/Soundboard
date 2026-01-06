@@ -34,7 +34,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
 script = ExtResource("1_dbo81")
-grid = NodePath("PanelContainer/VSplitContainer/MarginContainer/Grid")
+grid = NodePath("PanelContainer/VSplitContainer/MarginContainer/ScrollContainer/Grid")
 randomize_colors = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/StopAllSounds")
 search = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/LineEdit")
 volume_slider = NodePath("PanelContainer/VSplitContainer/Control/HBoxContainer/VBoxContainer/VSlider")
@@ -203,8 +203,12 @@ theme_override_constants/margin_left = 7
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 7
 
-[node name="Grid" type="GridContainer" parent="PanelContainer/VSplitContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VSplitContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="PanelContainer/VSplitContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 5
 

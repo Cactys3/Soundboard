@@ -1,3 +1,19 @@
 [remap]
 
-importer="skip"
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c8qqhubkcldar"
+path="res://.godot/imported/Metal_Pipe.mp3-43017e04956bd39cecfcf6101ab6dfa5.mp3str"
+
+[deps]
+
+source_file="res://SavedAudio/Metal_Pipe.mp3"
+dest_files=["res://.godot/imported/Metal_Pipe.mp3-43017e04956bd39cecfcf6101ab6dfa5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

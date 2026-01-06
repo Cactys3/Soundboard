@@ -1,3 +1,19 @@
 [remap]
 
-importer="skip"
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dk5ql54moplv7"
+path="res://.godot/imported/UGH.mp3-162f6a658a0734e1e2df2cc1bb5f0375.mp3str"
+
+[deps]
+
+source_file="res://SavedAudio/UGH.mp3"
+dest_files=["res://.godot/imported/UGH.mp3-162f6a658a0734e1e2df2cc1bb5f0375.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -22,7 +22,6 @@ func _ready() -> void:
 	description.meta_clicked.connect(_on_meta_clicked)
 	var exe_folder = OS.get_executable_path().get_base_dir()
 	folder = exe_folder + "/SavedAudio/"
-	print(folder)
 	get_window().files_dropped.connect(drop_file)
 	get_window().size_changed.connect(resize)
 	create_folder_if_needed(folder)
@@ -41,7 +40,6 @@ func _ready() -> void:
 		popup.setup("Saved Application Volume: " + str(int(save_value * 100)) + "%", 2)
 	tree_exited.connect(save_volume)
 func _on_meta_clicked(meta):
-	print("meta")
 	OS.shell_open(meta)
 func save_volume():
 	write_number_to_json(folder, global_volume)
@@ -69,7 +67,7 @@ func handle_drop(drop: Drop):
 			var pack: PackedStringArray = file.split('\\')
 			var filename: String = pack[pack.size() - 1]
 			## On Duplicate Soundbyte dragged in, Confirm with User that they want to add the duplicate
-			if Files.has(filename):
+			if Files.has(file):
 				var confirmation: Confirmation = CONFIRMATION.instantiate()
 				ContextParent.instance.add_child(confirmation)
 				ContextParent.instance.visible = true
@@ -227,7 +225,6 @@ func get_files_in_folder(folder_path: String) -> Array[String]:
 	var files: Array[String] = []
 	var dir = DirAccess.open(folder_path)
 	if dir == null:
-		print("Failed to open directory: " + folder_path)
 		return files
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
@@ -355,7 +352,5 @@ func read_number_from_json(folder_path: String) -> float:
 func create_folder_if_needed(folder_path: String) -> bool:
 	if not DirAccess.dir_exists_absolute(folder_path):
 		var err = DirAccess.make_dir_recursive_absolute(folder_path)
-		print("folder doesn't exist, error: " + str(err))
 		return err == OK
-	print("folder exists")
 	return false

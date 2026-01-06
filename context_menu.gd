@@ -20,7 +20,6 @@ func _process(_delta: float) -> void:
 		queue_free()
 		ContextParent.instance.visible = false
 func setup(new_option: Option, restarting: bool, repeating: bool, pausing: bool, looping: bool, saved: bool, new_volume: float):
-	print(looping)
 	slider.value = (new_volume * slider.max_value) / 2
 	option = new_option
 	unloop = looping
